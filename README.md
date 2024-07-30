@@ -7,9 +7,8 @@
     </picture>
   </a>
 </p>
-
 <h1 align="center">
-    {COURSE_EMOJI} {COURSE_NAME_IN_ENGLISH}
+    🎇 Spark best practices and deploy
 </h1>
 
 <p align="center">
@@ -18,10 +17,10 @@
 </p>
 
 <p align="center">
-    {COURSE_SUMMARY_IN_ENGLISH}
+    Learn to deploy, monitor and optimize Apache Spark applications with a practical approach
 </p>
 
 <p align="center">
-  <a href="https://github.com/CodelyTV/{REPOSITORY_NAME}/stargazers">Stars are welcome 😊</a><br><br>
-  Course (Spanish): <a href="{COURSE_URL}">{COURSE_NAME_IN_SPANISH}</a>
+  <a href="https://github.com/CodelyTV/spark-best_practices_and_deploy-course/stargazers">Stars are welcome 😊</a><br><br>
+  Course (Spanish): <a href="{COURSE_URL}">Spark buenas prácticas y despliegue</a>
 </p>
