@@ -1,0 +1,67 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "CreateCluster",
+  "States": {
+    "CreateCluster": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::elasticmapreduce:createCluster.sync",
+      "Parameters": {
+        "Name": "WordCountStreamingCluster",
+        "ReleaseLabel": "emr-7.1.0",
+        "Applications": [
+          {
+            "Name": "Spark"
+          }
+        ],
+        "Instances": {
+          "InstanceGroups": [
+            {
+              "Name": "Master instance group",
+              "Market": "ON_DEMAND",
+              "InstanceRole": "MASTER",
+              "InstanceType": "m5.xlarge",
+              "InstanceCount": 1
+            },
+            {
+              "Name": "Core instance group",
+              "Market": "ON_DEMAND",
+              "InstanceRole": "CORE",
+              "InstanceType": "m5.xlarge",
+              "InstanceCount": 1
+            }
+          ],
+          "KeepJobFlowAliveWhenNoSteps": true
+        },
+        "JobFlowRole": "EMR_EC2_DefaultRole",
+        "ServiceRole": "EMR_DefaultRole",
+        "VisibleToAllUsers": true,
+        "LogUri": "s3://my-bucket-codely/logs/"
+      },
+      "Next": "AddStep"
+    },
+    "AddStep": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::elasticmapreduce:addStep.sync",
+      "Parameters": {
+        "ClusterId.$": "$.ClusterId",
+        "Step": {
+          "Name": "RunSparkJob",
+          "ActionOnFailure": "CONTINUE",
+          "HadoopJarStep": {
+            "Jar": "command-runner.jar",
+            "Args": [
+              "spark-submit",
+              "--deploy-mode",
+              "cluster",
+              "--class",
+              "org.apache.spark.examples.SparkPi",
+              "/usr/lib/spark/examples/jars/spark-examples.jar",
+              "10"
+            ]
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}

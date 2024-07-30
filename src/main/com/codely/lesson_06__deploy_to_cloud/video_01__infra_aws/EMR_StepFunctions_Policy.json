@@ -1,0 +1,19 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticmapreduce:RunJobFlow",
+        "elasticmapreduce:DescribeCluster",
+        "elasticmapreduce:TerminateJobFlows",
+        "elasticmapreduce:AddJobFlowSteps",
+        "elasticmapreduce:DescribeStep",
+        "elasticmapreduce:ListSteps",
+        "s3:*",
+        "iam:PassRole"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
