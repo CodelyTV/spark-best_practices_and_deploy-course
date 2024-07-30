@@ -15,7 +15,7 @@ case class SourceConfig(format: String, options: Map[String, String])
 case class SinkConfig(format: String, mode: String, path: String)
 
 object AppConfig {
-  def load(args: Array[String], appName: String): AppConfig = {
+  def load(args: Array[String]): AppConfig = {
 
     val cmdArgs    = ArgumentsParser.parse(args).getOrElse(CmdArgs())
     val configFile = new File(cmdArgs.configFile.get)
