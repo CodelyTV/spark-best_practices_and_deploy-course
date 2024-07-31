@@ -8,8 +8,7 @@ object AvgSpendingApp extends SparkApp {
 
   private val context = AppContext.load(args)
 
-  private val reader = StreamReader()
-
+  private val reader       = StreamReader()
   private val streamWriter = StreamWriter()
 
   private val job = AvgSpendingJob(context, reader, streamWriter)
