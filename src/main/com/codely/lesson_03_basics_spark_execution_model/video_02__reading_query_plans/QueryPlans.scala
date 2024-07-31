@@ -21,20 +21,6 @@ object QueryPlans extends App {
 
   mappedAnfFilteredDs.explain(extended = true)
 
-  import spark.implicits._
-
-  val anotherDs = Seq(
-    (0, "zero"),
-    (2, "two"),
-    (4, "four"),
-    (6, "six"),
-    (8, "eight")
-  ).toDF("id", "name")
-
-  val joinedDs = mappedDs.join(anotherDs, "id")
-
-  joinedDs.explain(extended = true)
-
   val bigRangeDs = spark.range(2000000000)
 
   val anotherBigDs = spark.range(2000000000)

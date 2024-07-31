@@ -1,24 +1,18 @@
 package com.codely.lesson_02_tests_in_spark.video_02__unit_testing.app
 
-import com.codely.lesson_02_tests_in_spark.video_02__unit_testing.config.AppConfig
+import com.codely.lesson_02_tests_in_spark.video_02__unit_testing.config.AppContext
 import com.codely.lesson_02_tests_in_spark.video_02__unit_testing.job.AvgSpendingJob
-import com.codely.lesson_02_tests_in_spark.video_02__unit_testing.service.{Reader, StreamWriter}
-import org.apache.spark.sql.SparkSession
+import com.codely.lesson_02_tests_in_spark.video_02__unit_testing.service.{StreamReader, StreamWriter}
 
-object AvgSpendingApp extends App {
+object AvgSpendingApp extends SparkApp {
 
-  private val context = AppConfig.load(args)
+  private val context = AppContext.load(args)
 
-  implicit val spark: SparkSession = SparkSession
-    .builder()
-    .appName(context.spark.appName)
-    .enableHiveSupport()
-    .getOrCreate()
+  private val reader = StreamReader()
 
-  private val reader = Reader()
-  private val deltaWriter = StreamWriter()
+  private val streamWriter = StreamWriter()
 
-  val job = AvgSpendingJob(context, reader, deltaWriter)
+  private val job = AvgSpendingJob(context, reader, streamWriter)
 
   job.run()
 

@@ -29,12 +29,13 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
 
     val result = spark.sql("select * from queryName")
     result.show()
+
     result.collect().head shouldEqual Row(
       "purchase",
       "2024-06-28T14:35:00Z",
       "user456",
       "trans789",
-      Array(Row("prod123", 2, "Sample product description", "Electronics", 299.99)),
+      Seq(Row("prod123", 2, "Sample product description", "Electronics", 299.99)),
       "event012"
     )
   }
@@ -49,7 +50,7 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
 
     val streamingQuery = transformedSessions.writeStream
       .format("memory")
-      .queryName("queryName")
+      .queryName("queryNameData")
       .outputMode("append")
       .start()
 
@@ -57,9 +58,14 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
     streamingQuery.processAllAvailable()
     events.commit(offset)
 
-    val result = spark.sql("select * from queryName")
+    val result = spark.sql("select * from queryNameData")
     result.show()
-    result.collect().head.getAs[String]("date") shouldEqual "2024-06-28"
+
+    val date         = result.collect().head.getAs[java.sql.Date]("date")
+    val dateAsString = date.toString
+
+    dateAsString shouldEqual "2024-06-28"
+
   }
 
   it should "explode products correctly" in {
@@ -72,21 +78,29 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
 
     val streamingQuery = transformedSessions.writeStream
       .format("memory")
-      .queryName("queryName")
+      .queryName("queryNameExplode")
       .outputMode("append")
       .start()
 
     val offset = events.addData(DataFrameExtensionsTest.testPurchase)
+
     streamingQuery.processAllAvailable()
+
     events.commit(offset)
 
-    val result = spark.sql("select * from queryName")
+    val result = spark.sql("select * from queryNameExplode")
+
     result.show()
-    result.collect().head shouldEqual Row(
-      "user456",
-      Row("prod123", 2, "Sample product description", "Electronics", 299.99),
-      "2024-06-28"
-    )
+
+    val actualRow = result.first()
+
+    actualRow.getString(0) shouldEqual "user456"
+
+    val actualProduct   = actualRow.getStruct(1)
+    val expectedProduct = Row("prod123", 2, "Sample product description", "Electronics", 299.99)
+    actualProduct shouldEqual expectedProduct
+
+    actualRow.getDate(2).toString shouldEqual "2024-06-28"
   }
 
   it should "transform for aggregation correctly" in {
@@ -99,7 +113,7 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
 
     val streamingQuery = transformedSessions.writeStream
       .format("memory")
-      .queryName("queryName")
+      .queryName("queryNameAggregation")
       .outputMode("append")
       .start()
 
@@ -107,7 +121,7 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
     streamingQuery.processAllAvailable()
     events.commit(offset)
 
-    val result = spark.sql("select * from queryName")
+    val result = spark.sql("select * from queryNameAggregation")
     result.show()
     result.collect().head shouldEqual Row("user456", "Electronics", 6, 599.98)
   }
@@ -123,7 +137,7 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
 
     val streamingQuery = transformedSessions.writeStream
       .format("memory")
-      .queryName("queryName")
+      .queryName("queryNameAverage")
       .outputMode("complete")
       .start()
 
@@ -131,7 +145,7 @@ class DataFrameExtensionsTest extends SparkTestHelper with Matchers {
     streamingQuery.processAllAvailable()
     events.commit(offset)
 
-    val result = spark.sql("select * from queryName")
+    val result = spark.sql("select * from queryNameAverage")
     result.show()
     result.collect().head shouldEqual Row("user456", "Electronics", 6, 599.98)
   }

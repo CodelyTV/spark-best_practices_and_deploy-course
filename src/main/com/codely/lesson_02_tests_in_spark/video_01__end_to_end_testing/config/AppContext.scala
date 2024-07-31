@@ -4,7 +4,7 @@ import com.typesafe.config.ConfigFactory
 
 import java.io.File
 
-case class AppConfig(
+case class AppContext(
     spark: SparkConfig,
     source: SourceConfig,
     sink: SinkConfig
@@ -14,8 +14,8 @@ case class SparkConfig(appName: String)
 case class SourceConfig(format: String, options: Map[String, String])
 case class SinkConfig(format: String, mode: String, path: String)
 
-object AppConfig {
-  def load(args: Array[String]): AppConfig = {
+object AppContext {
+  def load(args: Array[String]): AppContext = {
 
     val cmdArgs    = ArgumentsParser.parse(args).getOrElse(CmdArgs())
     val configFile = new File(cmdArgs.configFile.get)
@@ -29,7 +29,7 @@ object AppConfig {
       "driver"   -> config.getString("source.options.driver")
     )
 
-    AppConfig(
+    AppContext(
       spark = SparkConfig(
         appName = config.getString("spark.appName")
       ),

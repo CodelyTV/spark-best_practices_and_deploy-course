@@ -24,6 +24,7 @@ services:
     environment:
       - SPARK_LOCAL_IP=172.19.0.10
       - SPARK_WORKLOAD=master
+      - SPARK_DAEMON_MEMORY=3G
     networks:
       spark-network:
         ipv4_address: 172.19.0.10
@@ -37,9 +38,8 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=2
-      - SPARK_WORKER_MEMORY=2G
-      - SPARK_DRIVER_MEMORY=2G
+      - SPARK_WORKER_CORES=3
+      - SPARK_WORKER_MEMORY=3G
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=172.19.0.2
@@ -62,9 +62,8 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-      - SPARK_WORKER_CORES=2
-      - SPARK_WORKER_MEMORY=2G
-      - SPARK_DRIVER_MEMORY=2G
+      - SPARK_WORKER_CORES=3
+      - SPARK_WORKER_MEMORY=3G
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=172.19.0.3
@@ -208,7 +207,7 @@ services:
         --deploy-mode client
         --executor-memory 1G
         --driver-memory 1G
-        --total-executor-cores 1 
+        --total-executor-cores 2
         --conf spark.sql.hive.metastore.version=2.3.9
         --conf spark.sql.uris=thrift://hive-metastore:9083
         --conf spark.hadoop.hive.metastore.uris=thrift://hive-metastore:9083
