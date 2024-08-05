@@ -5,7 +5,6 @@ import com.codely.lesson_02_tests_in_spark.z_practical_exercise.job.AvgSpendingJ
 import com.codely.lesson_02_tests_in_spark.z_practical_exercise.service.{Reader, StreamWriter}
 import org.apache.spark.sql.SparkSession
 
-
 object AvgSpendingApp extends App {
 
   private val context = AppConfig.load(args)
@@ -16,7 +15,7 @@ object AvgSpendingApp extends App {
     .enableHiveSupport()
     .getOrCreate()
 
-  private val reader = Reader()
+  private val reader      = Reader()
   private val deltaWriter = StreamWriter()
 
   val job = AvgSpendingJob(context, reader, deltaWriter)

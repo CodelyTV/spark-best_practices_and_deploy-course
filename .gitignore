@@ -8,3 +8,4 @@ project/plugins/project/
 /docker/spark/data/
 /docker/volume/
 /docker/spark/apps/
+/derby.log

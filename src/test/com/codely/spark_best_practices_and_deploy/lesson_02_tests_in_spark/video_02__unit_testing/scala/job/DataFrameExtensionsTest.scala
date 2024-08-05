@@ -9,16 +9,19 @@ class DataFrameExtensionsTest extends SparkTestHelper {
   "DataFrameExtensionsTest" should "calculate average spending correctly" in {
 
     import testSQLImplicits._
+
     implicit val sqlCtx: SQLContext = spark.sqlContext
 
-    val events   = MemoryStream[String]
-    val sessions = events.toDS
-    assert(sessions.isStreaming, "sessions must be a streaming Dataset")
+    val events = MemoryStream[String]
 
-    val transformedSessions =
-      sessions.toDF().calculateCompleteAvgSpending
+    val eventsDataFrame = events.toDF()
 
-    val streamingQuery = transformedSessions.writeStream
+    assert(eventsDataFrame.isStreaming, "eventsDataFrame must be a streaming Dataset")
+
+    val transformedDataFrame =
+      eventsDataFrame.calculateCompleteAvgSpending
+
+    val streamingQuery = transformedDataFrame.writeStream
       .format("memory")
       .queryName("queryName")
       .outputMode("complete")
@@ -27,13 +30,15 @@ class DataFrameExtensionsTest extends SparkTestHelper {
     val offset = events.addData(DataFrameExtensionsTest.testPurchase)
 
     streamingQuery.processAllAvailable()
+
     events.commit(offset)
 
     val result = spark.sql("select * from queryName")
-    result.show()
+
     assert(
       result.collect().head === Row("user456", "Electronics", 6, 599.98)
     )
+
   }
 }
 

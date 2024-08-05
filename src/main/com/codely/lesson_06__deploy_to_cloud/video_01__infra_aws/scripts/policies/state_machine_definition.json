@@ -6,7 +6,7 @@
       "Type": "Task",
       "Resource": "arn:aws:states:::elasticmapreduce:createCluster.sync",
       "Parameters": {
-        "Name": "WordCountStreamingCluster",
+        "Name": "MyAppCluster",
         "ReleaseLabel": "emr-7.1.0",
         "Applications": [
           {

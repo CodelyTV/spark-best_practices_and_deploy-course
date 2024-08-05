@@ -4,7 +4,7 @@ trait SparkApp extends App {
   val spark = org.apache.spark.sql.SparkSession.builder
     .master("local[*]")
     .appName("Spark Broadcast Join")
-    //.config("spark.sql.autoBroadcastJoinThreshold", -1) descomentar primera vez
-    //.config("spark.sql.adaptive.enabled", "false")  descomentar primera vez
+    // .config("spark.sql.autoBroadcastJoinThreshold", -1) descomentar primera vez
+    // .config("spark.sql.adaptive.enabled", "false")  descomentar primera vez
     .getOrCreate()
 }

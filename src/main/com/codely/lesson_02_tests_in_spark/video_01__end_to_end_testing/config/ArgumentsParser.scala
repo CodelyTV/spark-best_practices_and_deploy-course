@@ -3,8 +3,8 @@ package com.codely.lesson_02_tests_in_spark.video_01__end_to_end_testing.config
 import scopt.OParser
 
 object ArgumentsParser {
-  val builder = OParser.builder[CmdArgs]
-  val argsParser = {
+  private val builder = OParser.builder[CmdArgs]
+  private val argsParser = {
     import builder._
     OParser.sequence(
       programName("Scala Application"),

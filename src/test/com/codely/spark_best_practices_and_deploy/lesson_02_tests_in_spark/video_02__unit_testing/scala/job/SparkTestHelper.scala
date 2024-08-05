@@ -10,10 +10,7 @@ import java.io.File
 import java.nio.file.Files
 import scala.reflect.io.Directory
 
-trait SparkTestHelper
-    extends AnyFlatSpec
-    with BeforeAndAfterEach
-    with BeforeAndAfterAll {
+trait SparkTestHelper extends AnyFlatSpec with BeforeAndAfterEach with BeforeAndAfterAll {
 
   private val sparkSession = SparkSession
     .builder()

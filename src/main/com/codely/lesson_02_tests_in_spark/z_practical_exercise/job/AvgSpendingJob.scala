@@ -3,13 +3,12 @@ package com.codely.lesson_02_tests_in_spark.z_practical_exercise.job
 import com.codely.lesson_02_tests_in_spark.z_practical_exercise.extensions.DataFrameExtensions._
 import com.codely.lesson_02_tests_in_spark.z_practical_exercise.config.AppConfig
 import com.codely.lesson_02_tests_in_spark.z_practical_exercise.service.{Reader, StreamWriter}
-import org.apache.spark.sql.SparkSession
 
 case class AvgSpendingJob(
     context: AppConfig,
     reader: Reader,
     writer: StreamWriter
-)(implicit spark: SparkSession) {
+) {
 
   def run(): Unit = {
 
