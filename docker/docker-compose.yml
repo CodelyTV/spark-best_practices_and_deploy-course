@@ -40,7 +40,7 @@ services:
       - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKER_CORES=3
       - SPARK_WORKER_MEMORY=3G
-      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=3G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=172.19.0.2
     volumes:
@@ -64,7 +64,7 @@ services:
       - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKER_CORES=3
       - SPARK_WORKER_MEMORY=3G
-      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=3G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=172.19.0.3
     volumes:

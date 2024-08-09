@@ -4,7 +4,7 @@ import org.apache.spark.sql.functions.when
 
 object SkewJoinApp extends SparkApp {
 
-  // ./bin/spark-shell --master spark://spark-master:7077  --driver-memory 4g --executor-memory 1024mb --conf spark.sql.autoBroadcastJoinThreshold=-1 --conf spark.sql.adaptive.enabled=false
+  // ./bin/spark-shell --master spark://spark-master:7077  --driver-memory 3g --executor-memory 1024mb --conf spark.sql.autoBroadcastJoinThreshold=-1 --conf spark.sql.adaptive.enabled=false
 
   spark.sparkContext.setLogLevel("WARN")
 
@@ -12,45 +12,32 @@ object SkewJoinApp extends SparkApp {
 
   spark.sparkContext.setJobGroup("skewed data", "skewed data")
 
-  val skewedData = spark
-    .range(0, 10000000) // 10M
-    .withColumn("key", when($"id" < 10, $"id").otherwise(999))
-    .withColumn("value", $"id")
-
   val uniformData = spark
-    .range(0, 1000000) // 1M
+    .range(0, 10000000) // 10M
     .withColumn("key", $"id")
     .withColumn("value", $"id")
 
-  val joined = skewedData.join(uniformData, "key")
+  val skewedData = spark
+    .range(0, 200000000) // 200M
+    .withColumn("key", when($"id" < 10000000, $"id").otherwise(999))
+    .withColumn("value", $"id")
 
-  val res = joined.filter($"key" === 999).count()
-  println(s"Count for skew key (999): $res")
+  skewedData.join(uniformData, "key").count()
 
   spark.sparkContext.clearJobGroup()
 
   spark.sparkContext.setJobGroup("adaptative query execution", "adaptative query execution")
 
   spark.conf.set("spark.sql.adaptive.enabled", "true")
+  spark.conf.set("spark.sql.adaptive.skewJoin.skewedPartitionFactor", "1")
+  spark.conf.set("spark.sql.adaptive.skewJoin.skewedPartitionThresholdInBytes", "20MB")
+  spark.conf.set("spark.sql.adaptive.advisoryPartitionSizeInBytes", "15MB")
 
-  import org.apache.spark.sql.functions._
-
-  val skewedDataAQE = spark
-    .range(0, 10000000) // 10M
-    .withColumn("key", when($"id" < 10, $"id").otherwise(999))
-    .withColumn("value", $"id")
-
-  val uniformDataAQE = spark
-    .range(0, 1000000) // 1M
-    .withColumn("key", $"id")
-    .withColumn("value", $"id")
-
-  val joinedAQE = skewedDataAQE.join(uniformDataAQE, "key")
+  val joinedAQE = skewedData.join(uniformData, "key")
 
   joinedAQE.explain(true)
 
-  val resAQE = joinedAQE.filter($"key" === 999).count()
-  println(s"Count for skew key (999): $resAQE")
+  joinedAQE.count()
 
   spark.sparkContext.clearJobGroup()
 
