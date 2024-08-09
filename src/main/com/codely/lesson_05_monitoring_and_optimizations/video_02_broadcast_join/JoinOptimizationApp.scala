@@ -4,10 +4,6 @@ import org.apache.spark.sql.functions.broadcast
 
 object JoinOptimizationApp extends SparkApp {
 
-  // ./bin/spark-shell --master spark://spark-master:7077 --driver-memory 3g --conf spark.sql.adaptive.enabled=false
-
-  spark.sparkContext.setLogLevel("WARN")
-
   import spark.implicits._
 
   spark.sparkContext.setJobGroup("join without optimization", "join without optimization")
@@ -39,6 +35,4 @@ object JoinOptimizationApp extends SparkApp {
   veryLargeDF.join(broadcast(largeDF), "id").count()
 
   spark.sparkContext.clearJobGroup()
-
-  Thread.sleep(1000000)
 }

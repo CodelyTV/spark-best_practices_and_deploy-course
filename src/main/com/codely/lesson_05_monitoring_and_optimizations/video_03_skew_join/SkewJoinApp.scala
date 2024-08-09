@@ -4,10 +4,6 @@ import org.apache.spark.sql.functions.when
 
 object SkewJoinApp extends SparkApp {
 
-  // ./bin/spark-shell --master spark://spark-master:7077  --driver-memory 3g --executor-memory 1024mb --conf spark.sql.autoBroadcastJoinThreshold=-1 --conf spark.sql.adaptive.enabled=false
-
-  spark.sparkContext.setLogLevel("WARN")
-
   import spark.implicits._
 
   spark.sparkContext.setJobGroup("skewed data", "skewed data")
@@ -40,6 +36,4 @@ object SkewJoinApp extends SparkApp {
   joinedAQE.count()
 
   spark.sparkContext.clearJobGroup()
-
-  Thread.sleep(1000000)
 }

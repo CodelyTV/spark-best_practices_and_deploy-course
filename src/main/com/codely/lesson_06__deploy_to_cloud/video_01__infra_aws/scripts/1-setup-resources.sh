@@ -63,9 +63,4 @@ aws iam create-service-linked-role --aws-service-name elasticmapreduce.amazonaws
 echo "Creating Step Functions state machine for EMR cluster"
 aws stepfunctions create-state-machine --name "EMR_StepFunctions_Machine" --definition file://policies/state_machine_definition.json --role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/$EMR_STEP_FUNCTIONS_ROLE --profile $AWS_PROFILE
 
-# Start execution of Step Functions (Uncomment to enable execution)
-# echo "Starting execution of Step Functions state machine"
-
-aws stepfunctions start-execution --state-machine-arn arn:aws:states:eu-west-1:010928190667:stateMachine:EMR_StepFunctions_Machine --profile emr-user
-
 echo "Setup complete."
