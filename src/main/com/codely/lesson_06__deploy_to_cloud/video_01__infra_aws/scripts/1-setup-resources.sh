@@ -14,7 +14,7 @@ EMR_STEP_FUNCTIONS_POLICY="EMR_StepFunctions_Policy"
 EMR_STEP_FUNCTIONS_ROLE="EMR_StepFunctions_Role"
 
 # Define AWS Account ID
-AWS_ACCOUNT_ID="010928190667"
+AWS_ACCOUNT_ID="CHANGE_FOR_YOUR_AWS_ACCOUNT_ID"
 
 # Create S3 bucket
 echo "Creating S3 bucket: $S3_BUCKET_NAME"

@@ -14,7 +14,20 @@ EMR_STEP_FUNCTIONS_POLICY="EMR_StepFunctions_Policy"
 EMR_STEP_FUNCTIONS_ROLE="EMR_StepFunctions_Role"
 
 # Define AWS Account ID
-AWS_ACCOUNT_ID="010928190667"
+AWS_ACCOUNT_ID="CHANGE_FOR_YOUR_AWS_ACCOUNT_ID"
+
+# Function to terminate active EMR clusters
+function terminate_active_emr_clusters() {
+    echo "Listing active EMR clusters"
+    local cluster_ids=$(aws emr list-clusters --active --query 'Clusters[*].Id' --output text --profile $AWS_PROFILE)
+
+    if [ -n "$cluster_ids" ]; then
+        echo "Terminating active EMR clusters: $cluster_ids"
+        aws emr terminate-clusters --cluster-ids $cluster_ids --profile $AWS_PROFILE
+    else
+        echo "No active EMR clusters found."
+    fi
+}
 
 # Function to detach and delete IAM policies
 function detach_and_delete_policy() {
@@ -27,6 +40,9 @@ function detach_and_delete_policy() {
     echo "Deleting IAM policy: $policy_name"
     aws iam delete-policy --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$policy_name --profile $AWS_PROFILE
 }
+
+# Call the function to terminate active EMR clusters
+terminate_active_emr_clusters
 
 # Delete EMR Step Functions State Machine
 echo "Deleting Step Functions state machine"
