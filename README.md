@@ -22,5 +22,5 @@
 
 <p align="center">
   <a href="https://github.com/CodelyTV/spark-best_practices_and_deploy-course/stargazers">Stars are welcome 😊</a><br><br>
-  Course (Spanish): <a href="{COURSE_URL}">Spark buenas prácticas y despliegue</a>
+  Course (Spanish): <a href="https://pro.codely.com/library/spark-buenas-practicas-y-despliegue-230984">Spark buenas prácticas y despliegue</a>
 </p>
