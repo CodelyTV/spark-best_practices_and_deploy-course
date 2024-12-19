@@ -17,8 +17,8 @@ object Dependencies {
   private val test = Seq(
     "org.scalatest" %% "scalatest"                       % "3.2.19",
     "org.mockito"   %% "mockito-scala"                   % "1.17.37",
-    "com.dimafeng"  %% "testcontainers-scala"            % "0.41.4",
-    "com.dimafeng"  %% "testcontainers-scala-postgresql" % "0.41.4",
+    "com.dimafeng"  %% "testcontainers-scala"            % "0.41.5",
+    "com.dimafeng"  %% "testcontainers-scala-postgresql" % "0.41.5",
     "org.postgresql" % "postgresql"                      % "42.7.4"
   ).map(_ % Test)
 
