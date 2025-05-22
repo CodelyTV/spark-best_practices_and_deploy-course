@@ -8,7 +8,7 @@ object Dependencies {
     "org.apache.spark"       %% "spark-sql"            % "3.5.0" % Provided,
     "org.apache.spark"       %% "spark-streaming"      % "3.5.0" % Provided,
     "org.apache.spark"       %% "spark-hive"           % "3.5.0" % Provided,
-    "org.apache.hadoop"       % "hadoop-aws"           % "3.2.2" % Provided,
+    "org.apache.hadoop"       % "hadoop-aws"           % "3.2.4" % Provided,
     "io.delta"               %% "delta-spark"          % "3.1.0" % Provided,
     "org.apache.spark"       %% "spark-sql-kafka-0-10" % "3.5.0",
     "com.typesafe"            % "config"               % "1.4.3",
