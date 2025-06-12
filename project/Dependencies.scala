@@ -19,7 +19,7 @@ object Dependencies {
     "org.mockito"   %% "mockito-scala"                   % "1.17.44",
     "com.dimafeng"  %% "testcontainers-scala"            % "0.41.4",
     "com.dimafeng"  %% "testcontainers-scala-postgresql" % "0.41.4",
-    "org.postgresql" % "postgresql"                      % "42.7.5"
+    "org.postgresql" % "postgresql"                      % "42.7.7"
   ).map(_ % Test)
 
   val all: Seq[ModuleID] = prod ++ test
