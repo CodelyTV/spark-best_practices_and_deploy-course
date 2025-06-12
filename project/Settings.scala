@@ -6,7 +6,7 @@ object Settings {
   val settings = Seq(
     name                 := "spark-best_practises_and_deploy-course",
     version              := "0.1.0-SNAPSHOT",
-    scalaVersion         := "2.12.20",
+    scalaVersion         := "2.13.16",
     organization         := "com.codely",
     organizationName     := "com.codely, Inc.",
     organizationHomepage := Some(url("https://com.codely")),
