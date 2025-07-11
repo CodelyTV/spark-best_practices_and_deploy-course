@@ -11,7 +11,7 @@ object Dependencies {
     "org.apache.hadoop"       % "hadoop-aws"           % "3.2.2" % Provided,
     "io.delta"               %% "delta-spark"          % "3.1.0" % Provided,
     "org.apache.spark"       %% "spark-sql-kafka-0-10" % "3.5.0",
-    "com.typesafe"            % "config"               % "1.4.3",
+    "com.typesafe"            % "config"               % "1.4.4",
     "com.github.scopt"       %% "scopt"                % "4.1.0"
   )
   private val test = Seq(
