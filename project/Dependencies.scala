@@ -15,7 +15,7 @@ object Dependencies {
     "com.github.scopt"       %% "scopt"                % "4.1.0"
   )
   private val test = Seq(
-    "org.scalatest" %% "scalatest"                       % "3.2.19",
+    "org.scalatest" %% "scalatest"                       % "3.2.20",
     "org.mockito"   %% "mockito-scala"                   % "1.17.44",
     "com.dimafeng"  %% "testcontainers-scala"            % "0.41.4",
     "com.dimafeng"  %% "testcontainers-scala-postgresql" % "0.41.4",
