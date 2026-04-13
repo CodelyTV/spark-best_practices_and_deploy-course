@@ -3,7 +3,7 @@ package com.codely.lesson_02_tests_in_spark.z_practical_exercise.config
 import scopt.OParser
 
 object ArgumentsParser {
-  val builder = OParser.builder[CmdArgs]
+  val builder    = OParser.builder[CmdArgs]
   val argsParser = {
     import builder._
     OParser.sequence(
